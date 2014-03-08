@@ -86,6 +86,14 @@ void PCM2705_SPI::play_pause()
 }
 
 
+void PCM2705_SPI::extended()
+{
+	_spi_reg |= (1<<EXT);
+	PCM2705_SPI::_send_spi_reg();
+	PCM2705_SPI::_clear_spi_reg();	
+}
+
+
 //1=HID status write
 //0=ROM data write
 void PCM2705_SPI::_set_mode(byte mode)
@@ -120,7 +128,7 @@ void PCM2705_SPI::_send_spi_reg()
 	
 	for(cnt=0;cnt<16;++cnt)
 	{
-		if ((_spi_reg & (1 << (15-cnt))) > 1)
+		if ((_spi_reg & (1 << (15-cnt))) >= 1)
 		{
 			digitalWrite(_MD, HIGH);
 		}
