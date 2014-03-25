@@ -25,10 +25,11 @@ class NoDeviceError(Exception):
 
 class ListenHID(threading.Thread):
 	HID_event = events.Event()
-	def __init__(self, vendor_id, product_id, intf_nr, conf_nr):
+	def __init__(self, vendor_id, product_id, intf_nr, conf_nr, pk_size):
 		super(ListenHID, self).__init__()
 		self.stop_flagg = False
 		self.intf_nr = intf_nr
+		self.pk_size = pk_size
 		#Get the correct USB device
 		self._dev = usb.core.find(idVendor=vendor_id, idProduct=product_id)
 		if self._dev == None:
@@ -50,9 +51,7 @@ class ListenHID(threading.Thread):
 		"""Start to listen for HID commands"""
 		while not self.stop_flagg:
 			try:
-				#TODO: Find how many bytes to read automagical or 
-				#      take size as a parameter
-				data = self._endp.read(2, None)
+				data = self._endp.read(self.pk_size, None)
 				self.HID_event.notify(data[0])
 
 			except usb.core.USBError as err:
