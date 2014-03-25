@@ -11,7 +11,6 @@ import usb.util
 import sys
 import events
 import threading
-import time
 
 
 class NoDeviceError(Exception):
@@ -19,8 +18,6 @@ class NoDeviceError(Exception):
 	
 	def __init__(self, msg):
 		pass
-		#print 'Device %s:%s does not exist' % (msg[0], msg[1])
-
 
 
 class ListenHID(threading.Thread):
@@ -59,8 +56,9 @@ class ListenHID(threading.Thread):
 				if err.errno != 110:
 					print(err)
 					sys.exit(err.errno)
-					
-		#TODO: Get this to work!
-		#if self._dev.is_kernel_driver_active(2) == False:
-		#	self._dev.attach_kernel_driver(2)
+		
+		#Reattach the kernel driver if not active
+		if self._dev.is_kernel_driver_active(2) == False:
+			usb.util.dispose_resources(self._dev)
+			self._dev.attach_kernel_driver(2)
 
