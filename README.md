@@ -18,9 +18,11 @@ The library provides an easy to use interface to PCM2705 USB DACs. Playback on t
 
 See the PCM2705 datasheet for more information about the HID-states.
 
+If you want custom actions on the computer for HID-commands you can use the supplied python module "hid_catch".
+
 
 #####USAGE
-Connect your three selected digital pins (ex. 10,12,13) to the MD, MS and MC pin one the PCM2705 chip. See pin placement in the datashet. Check out the supplied code example for library usage instructions.
+Connect your three selected digital pins (ex. 10,12,13) to the MD, MS and MC pin one the PCM2705 chip. See pin placement in the datashet. Check out the supplied example for usage instructions.
 
 
 #####INSTALLATION
@@ -34,7 +36,7 @@ Connect your three selected digital pins (ex. 10,12,13) to the MD, MS and MC pin
 
 #####DEVELOPMENT
 Support for serial programming of the internal descriptor data is planned for an future release.
-See the PCM2705 datasheet for more information about the internal descriptor data internal descriptor data.
+See the PCM2705 datasheet for more information about the internal descriptor data.
 
 
 #####LINKS
