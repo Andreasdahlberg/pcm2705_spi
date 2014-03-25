@@ -8,13 +8,6 @@
 
 #include "Arduino.h"
 
-const int VENDOR_ID = 0x08BB;  //Texas Instruments
-const int PRODUCT_ID = 0x2705; // PCM2705 Audio Codec
-//byte DEVICE_STRING[16];
-//byte VENDOR_STRING[32];
-const byte BM_ATTRIBUTE = 0x80; // Bus-powered
-const byte MAX_PWR = 0xFA; // 500 mA
-const byte HID_USAGE_ID[3] = {0x01, 0x93, 0x0A}; //AL A/V capture
 
 const byte ADDR = 9;
 const byte ST = 11;
@@ -49,15 +42,13 @@ class PCM2705_SPI
 		void previous();
 		void stop();
 		void play_pause();
-		void send_descriptor_data();
+		void send_descriptor_data(int, int, byte*, byte*, byte, byte, byte*);
 		void extended();
 	private:
 		void _tick();
 		void _send_spi_reg();
-		void _send_spi_reg_c();
 		void _clear_spi_reg();
-		void _set_mode(byte);
-		void _send_array(unsigned char*, byte);
+		void _send_array(unsigned char*, int);
 		void _send_int(int);
 		int _spi_reg;
 		byte _MD;

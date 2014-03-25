@@ -9,7 +9,7 @@
 
 PCM2705_SPI::PCM2705_SPI(byte MD, byte MC, byte MS)
 {
-	_spi_reg = 0x00;
+	_spi_reg = 0x0000;
 	_MD = MD;
 	_MC = MC;
 	_MS = MS;
@@ -94,22 +94,6 @@ void PCM2705_SPI::extended()
 }
 
 
-//1=HID status write
-//0=ROM data write
-void PCM2705_SPI::_set_mode(byte mode)
-{
-	if (mode == 1)
-	{
-		//Set ST(B11) high
-		_spi_reg |= (1 << ST); 	
-	}
-	else
-	{
-		//Set ST(B11) low
-		_spi_reg &= ~(1 < ST);
-	}
-}
-
 
 void PCM2705_SPI::_clear_spi_reg()
 {
@@ -143,6 +127,66 @@ void PCM2705_SPI::_send_spi_reg()
 	digitalWrite(_MS, HIGH);
 	digitalWrite(_MC, HIGH);
 }
+
+
+void PCM2705_SPI::send_descriptor_data(int VENDOR_ID, int PRODUCT_ID, byte *DEVICE_STRING,
+									   byte *VENDOR_STRING, byte BM_ATTRIBUTE
+									   , byte MAX_PWR, byte *HID_USAGE_ID)
+{
+	//Set ADDR high to init descriptor reprogramming
+	_spi_reg = (1<<ADDR);
+	PCM2705_SPI::_send_spi_reg();
+
+	//Send vendor id
+	PCM2705_SPI::_send_int(VENDOR_ID);
+	//Send product id
+	PCM2705_SPI::_send_int(PRODUCT_ID);
+	
+	//Send device string
+	PCM2705_SPI::_send_array(DEVICE_STRING, 16);
+	//Send vendor string
+	PCM2705_SPI::_send_array(VENDOR_STRING, 32);
+	
+	//Send bm attribute
+	_spi_reg = ((1 << ST) | BM_ATTRIBUTE);
+	PCM2705_SPI::_send_spi_reg_c();
+	
+	//Send max power
+	_spi_reg = ((1 << ST) | MAX_PWR);
+	PCM2705_SPI::_send_spi_reg_c();	
+	
+	//send aux HID usage
+	PCM2705_SPI::_send_array(HID_USAGE_ID, 3);
+
+	_spi_reg = 0;
+	PCM2705_SPI::_send_spi_reg_c();
+}
+
+
+void PCM2705_SPI::_send_array(unsigned char *data, int size)
+{
+
+	byte cnt;
+	for (cnt = size; cnt > 0; --cnt)
+	{
+		_spi_reg = (1 << ST) | (data[cnt-1]);
+		PCM2705_SPI::_send_spi_reg();
+	}
+}
+
+
+void PCM2705_SPI::_send_int(int value)
+{	
+	//Send LSB
+	_spi_reg = (1 << ST) | (value & 0x00FF);
+	PCM2705_SPI::_send_spi_reg();
+	
+	
+	//Send MSB
+	_spi_reg = (1 << ST) | ((value & 0xFF00) >> 8);
+	PCM2705_SPI::_send_spi_reg();	
+}
+
 
 
 //Take CLK low and then high again.
