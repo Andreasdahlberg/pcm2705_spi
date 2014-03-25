@@ -1,7 +1,10 @@
-PCM2705_SPI		KEYWORD1
-volume_up		KEYWORD2
-volume_down		KEYWORD2
-next			KEYWORD2
-previous		KEYWORD2
-stop			KEYWORD2
-play_pause		KEYWORD2
+PCM2705_SPI	KEYWORD1
+volume_up	KEYWORD2
+volume_down	KEYWORD2
+next	KEYWORD2
+previous	KEYWORD2
+stop	KEYWORD2
+mute	KEYWORD2
+play_pause	KEYWORD2
+extended	KEYWORD2
+send_descriptor_data	KEYWORD2
