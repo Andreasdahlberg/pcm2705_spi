@@ -2,7 +2,12 @@
 //This example will write to the internal descriptor data when the button on pin
 // 9 is pressed.
 
+//PSEL and HOST must be set high, the pullup on USB D+ must not be active.
+//This can either be done in hardware or software, so its not covered by this
+//example.
 
+
+//Check the PCM2705 datasheet for more information about available options
 int VENDOR_ID = 0x08BB;  //Texas Instruments
 int PRODUCT_ID = 0x2706; // PCM2705 Audio Codec
 byte DEVICE_STRING[16] = "My device name ";
@@ -26,7 +31,6 @@ void setup()
 {
 	//Set button pins as inputs
 	pinMode (BUTTON1, INPUT);
-
 }
 
 

@@ -149,17 +149,17 @@ void PCM2705_SPI::send_descriptor_data(int VENDOR_ID, int PRODUCT_ID, byte *DEVI
 	
 	//Send bm attribute
 	_spi_reg = ((1 << ST) | BM_ATTRIBUTE);
-	PCM2705_SPI::_send_spi_reg_c();
+	PCM2705_SPI::_send_spi_reg();
 	
 	//Send max power
 	_spi_reg = ((1 << ST) | MAX_PWR);
-	PCM2705_SPI::_send_spi_reg_c();	
+	PCM2705_SPI::_send_spi_reg();	
 	
 	//send aux HID usage
 	PCM2705_SPI::_send_array(HID_USAGE_ID, 3);
 
 	_spi_reg = 0;
-	PCM2705_SPI::_send_spi_reg_c();
+	PCM2705_SPI::_send_spi_reg();
 }
 
 
