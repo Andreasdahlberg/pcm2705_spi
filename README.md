@@ -1,8 +1,8 @@
 PCM2705 SPI Library
 ===========
 
-
 PCM2705 SPI library is a bitbang SPI implementation which makes it possible to interface with the PCM2705 USB DAC from Texas Instruments. The library should also work with PCM2705C, PCM2707 and PCM2707C but this has not been tested.
+
 
 #####FEATURES
 The library provides an easy to use interface to PCM2705 USB DACs. Playback on the computer that is  connected to the PCM2705 can be controlled by eight different HID-states. All available HID-states are supported and are listed below. 
@@ -22,7 +22,11 @@ If you want custom actions on the computer for HID-commands you can use the supp
 
 
 #####USAGE
-Connect your three selected digital pins (ex. 10,12,13) to the MD, MS and MC pin one the PCM2705 chip. See pin placement in the datashet. Check out the supplied example for usage instructions.
+Connect your three selected SPI pins (ex. 10,12,13) to the MD, MS and MC pin one the PCM2705 chip. See pin placement in the datashet. Check out the supplied example for usage instructions.
+
+
+######Internal descriptor reprogramming
+Before trying to program the internal descriptor data, make sure that HOST and PSEL are high. The pull-up resistor on the USB D+ line must not be active until the reprogramming is done. How this is done is not described here since that depends on how your DAC is designed. It may not be possible at all.
 
 
 #####INSTALLATION
@@ -32,11 +36,6 @@ Connect your three selected digital pins (ex. 10,12,13) to the MD, MS and MC pin
 
 #####UNINSTALLATION
 1. Delete the PCM2705 directory from your libraries directory.
-
-
-#####DEVELOPMENT
-Support for serial programming of the internal descriptor data is planned for an future release.
-See the PCM2705 datasheet for more information about the internal descriptor data.
 
 
 #####LINKS
