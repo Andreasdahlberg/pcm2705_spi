@@ -1,6 +1,6 @@
 #include "pcm2705_spi.h"
 
-//Buttons connected to the folowing pins:
+//Buttons connected to the following pins:
 const byte BUTTON1 = 9;
 const byte BUTTON2 = 8;
 const byte BUTTON3 = 7;
